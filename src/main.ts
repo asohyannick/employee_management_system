@@ -49,18 +49,17 @@ async function bootstrap() {
     credentials: true,
   });
   const config = new DocumentBuilder()
-    .setTitle('Employee Management System - EMS ERP API')
+    .setTitle('Employee Management System (EMS) API - Developed by Asoh Yannick, Backend Software Engineer | TypeScript • NodeJS • NestJS • PostgreSQL • JsonWebToken (JWT)')
     .setDescription(`
-    Comprehensive RESTful API documentation for the Employee Management System (EMS) ERP platform. 
-    This documentation provides detailed information about all available endpoints, including authentication, 
-    user management, fleet & driver operations, order processing, routing & planning, billing, 
-    tracking & telematics, reporting, and integration modules. 
+    Welcome to the comprehensive RESTful API documentation for the Employee Management System (EMS). 
+    This documentation covers all available endpoints, including authentication, 
+    employee profiles, departments, job roles, payroll & salaries, inventory, sales, reporting, 
+    and administrative operations.
 
-    It is intended for developers, integrators, and system administrators who are building, 
-    maintaining, or integrating with the EMS ERP backend services. 
-    All request and response schemas, authentication requirements, and error codes are fully documented.
-    `
-    )
+    Designed for developers, engineers, and integrators, this documentation provides detailed 
+    information on request/response schemas, authentication requirements, and error handling. 
+    Use this guide to integrate, maintain, or extend EMS backend services effectively.
+  `)
     .setVersion('1.0')
     .addBearerAuth()
     .build();

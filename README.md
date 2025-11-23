@@ -10,7 +10,7 @@ This API provides a complete backend solution for managing employees, salaries, 
 💼 Role: Backend Software Engineer
 🧠 Expertise:
 
-TypeScript • NodeJS • NestJS • PostgreSQL 
+TypeScript • NodeJS • NestJS • PostgreSQL
 
 Docker • RESTful API Architecture
 
@@ -24,51 +24,48 @@ This project follows REST API best practices and provides a foundation for a com
 
 Key features include:
 
-✅ Business Feature
-🟩 User Authentication & Authorization (JWT)
-🟩 Salary & Payroll Management
-🟩 Inventory Management
-🟩 Sales & Transactions Management
-🟩 Employee Profiles & Job Roles
-🟩 Department Management
-🟩 Admin Dashboard & Role-Based Access
-🟩 Email Notifications
-🟩 Reporting & Analytics
+✅	Business Feature
+🟩 User Authentication & Authorization (JWT)	
+🟩 Salary & Payroll Management	
+🟩 Inventory Management	
+🟩 Sales & Transactions Management	
+🟩 Employee Profiles & Job Roles	
+🟩 Department Management	
+🟩 Admin Dashboard & Role-Based Access	
+🟩 Email Notifications	
+🟩 Reporting & Analytics	
 
 🟩 Green boxes indicate implemented and tested endpoints.
 
 ⚙️ Tech Stack
-Layer Technology
-Backend Framework NestJS
-Language TypeScript
-Database PostgreSQL
-ORM TypeORM
-Authentication JWT & Passport.js
-Containerization Docker
-Testing Jest & Supertest
+Layer	Technology
+Backend Framework	NestJS
+Language	TypeScript
+Database	PostgreSQL
+ORM	TypeORM
+Authentication	JWT & Passport.js
+Containerization	Docker
+Testing	Jest & Supertest
 📘 API Endpoints Summary
 
 High-level summary of key endpoints:
 
-Category Description Example Endpoint
-🟩 Auth Register, Login, Logout, Forgot Password /api/v1/auth/register
-🟩 Users Employee profiles & roles /api/v1/users/{id}
-🟩 Salaries Pay and manage salaries /api/v1/salaries/pay
-🟩 Departments Manage company departments /api/v1/departments
-🟩 Jobs Manage job roles & positions /api/v1/jobs
-🟩 Inventory CRUD operations for items /api/v1/inventories
-🟩 Sales Track sales and transactions /api/v1/sales
-🟩 Reports Generate employee & department reports /api/v1/reports
-🟩 Admin Admin controls & analytics /api/v1/admin/users
+Category	Description	Example Endpoint
+🟩 Auth	Register, Login, Logout, Forgot Password	/api/v1/auth/register
+🟩 Users	Employee profiles & roles	/api/v1/users/{id}
+🟩 Salaries	Pay and manage salaries	/api/v1/salaries/pay
+🟩 Departments	Manage company departments	/api/v1/departments
+🟩 Jobs	Manage job roles & positions	/api/v1/jobs
+🟩 Inventory	CRUD operations for items	/api/v1/inventories
+🟩 Sales	Track sales and transactions	/api/v1/sales
+🟩 Reports	Generate employee & department reports	/api/v1/reports
+🟩 Admin	Admin controls & analytics	/api/v1/admin/users
 🐳 Running Locally (Docker Setup)
-
 # Clone the repository
-
 git clone https://github.com/asohyannick/employee-management-api
 cd employee-management-api
 
 # Build and run using Docker
-
 docker-compose up --build
 
 🧩 Contribution Guide
