@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule, ConfigService} from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 @Module({
-    imports: [  
-        ConfigModule.forRoot({          
+    imports: [
+        ConfigModule.forRoot({
             isGlobal: true
         }),
-        TypeOrmModule.forRootAsync({        
+        TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: (configService: ConfigService) => ({
@@ -18,10 +18,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
                 database: configService.get<string>('DATABASE_NAME'),
                 synchronize: true,
                 autoLoadEntities: true,
+                ssl: {
+                    rejectUnauthorized: false,
+                },
             }),
         }),
     ],
     providers: [],
     exports: [],
 })
-export class AppConfigModule {}         
+export class AppConfigModule { }         
