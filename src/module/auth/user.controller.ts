@@ -6,10 +6,10 @@ import {
   Delete,
   Body,
   Param,
-  Query,
   Res,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiQuery, ApiParam } from '@nestjs/swagger';
@@ -17,13 +17,13 @@ import type { Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginDto } from './dto/login-dto';
 import { User } from './entity/user.entity';
-import { verify } from 'crypto';
 import { ResendOtpDto, VerifyOtpDto } from './dto/verify-otp';
 import { MagicLinkDto, MagicLinkTokenDto } from './dto/magic-link.dto';
-import { ForgotPasswordDto, ResetPasswordDto, VerifyForgotPasswordDto } from './dto/forgot-password.dto';
+import { ForgotPasswordDto, VerifyForgotPasswordDto } from './dto/forgot-password.dto';
 import { RefreshTokenDto, RevokeRefreshTokenDto } from './dto/refresh-token.dto';
-import { FirebaseTokenIdDto, FirebaseUserDto } from './dto/firebase-token.dto';
+import { FirebaseTokenIdDto } from './dto/firebase-token.dto';
 import { GithubLoginDto } from './dto/github-login.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 @ApiTags('Authentication & User Management Endpoints')
 @Controller('auth')
 export class UserController {
@@ -135,7 +135,7 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'No user found for password reset' })
   @ApiBody({ type: ResetPasswordDto })
   @HttpCode(HttpStatus.OK)
-  async resetPassword(@Body('newPassword') password: ResetPasswordDto) {
+  async resetPassword(@Body() password: ResetPasswordDto) {
     const resetPassword = await this.userService.resetPassword(password.newPassword)
     return { message: "Password has been reset successfully", resetPassword };
   }
@@ -175,21 +175,12 @@ export class UserController {
     return { message: "Firebase Token ID has been verified successfully!", firebaseToken }
   }
 
-  @Post('firebase-user')
+  @Post('firebase-login')
   @ApiOperation({ summary: 'Find or create a Firebase user' })
   @ApiResponse({ status: 200, description: 'Firebase user found or created', type: User })
   @ApiBody({ description: 'Decoded Firebase token payload', type: Object })
-  @ApiQuery({ name: 'firebaseUid', required: true, type: String })
-  @ApiQuery({ name: 'email', required: true, type: String })
-  @ApiQuery({ name: 'firstName', required: true, type: String })
-  @ApiQuery({ name: 'lastName', required: true, type: String })
   @HttpCode(HttpStatus.OK)
-  async findOrCreateFirebaseUser(
-    @Query('firebaseUid') firebaseUid: string,
-    @Query('email') email: string,
-    @Query('firstName') firstName: string,
-    @Query('lastName') lastName: string,
-    @Body() firebaseUser: FirebaseUserDto,
+  async findOrCreateFirebaseUser(@Body() firebaseUser: any
   ) {
     const createorFetchFirebaseUser = await this.userService.findOrCreateFirebaseUser(
       firebaseUser.email,
@@ -202,14 +193,14 @@ export class UserController {
   }
 
   // ---------------- GitHub OAuth ----------------
-  @Post('github/login')
+  @Get('github/callback')
   @ApiOperation({ summary: 'Login user with GitHub OAuth' })
   @ApiResponse({ status: 200, description: 'User successfully logged in with GitHub', type: User })
   @ApiBody({ description: 'GitHub OAuth code', type: String })
   @HttpCode(HttpStatus.OK)
-  async loginWithGithub(@Body('code') code: GithubLoginDto, @Res({ passthrough: true }) res: Response) {
-    const githubLogin = await this.userService.loginWithGithub(code.code, res)
-    return { message: "User logged in is successful via GitHub", githubLogin }
+  async loginWithGithub(@Query('code') code: string, @Res({ passthrough: true }) res: Response) {
+    const result = await this.userService.loginWithGithub(code, res)
+      return res.redirect("http://localhost:3000/success"); 
   }
 
   // ---------------- User Management ----------------

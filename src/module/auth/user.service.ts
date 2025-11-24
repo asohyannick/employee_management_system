@@ -177,7 +177,6 @@ export class UserService {
                 isAccountBlocked: user.isAccountBlocked,
             }
         )
-
         await this.updateRefreshToken(user.id, refreshToken);
 
         res.cookie('authToken', accessToken, {

@@ -11,14 +11,14 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @IsString({ message: 'Email must be provided' })
-    @IsEmail()
-    @Matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/, {
-        message: 'Password must be minimum eight characters, at least one letter and one number'
-    })
+    @IsEmail({}, { message: 'Email must be valid' })
     email: string;
 
     @IsNotEmpty()
     @IsString({ message: 'Password must be provided' })
+    @Matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/, {
+        message: 'Password must be minimum eight characters, at least one letter and one number'
+    })
     password: string;
 
 }
