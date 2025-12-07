@@ -1,11 +1,5 @@
-import {
-    Column,
-    CreateDateColumn,
-    UpdateDateColumn,
-    Entity,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Exclude } from 'class-transformer'
 @Entity({ name: 'users' })
 export class User {
     @PrimaryGeneratedColumn()
@@ -13,11 +7,11 @@ export class User {
 
     @Exclude()
     @Column({ nullable: true })
-    githubId: string | null;
+    githubId: string;
 
     @Exclude()
     @Column({ nullable: true })
-    firebaseUid: string | null;
+    firebaseUid: string;
 
     @Column()
     firstName: string;
@@ -25,7 +19,7 @@ export class User {
     @Column()
     lastName: string;
 
-    @Column({ unique: true })
+    @Column({})
     email: string;
 
     @Exclude()
@@ -33,58 +27,58 @@ export class User {
     password: string;
 
     @Exclude()
-    @CreateDateColumn({ type: 'timestamp' })
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     createdAt: Date;
 
     @Exclude()
-    @UpdateDateColumn({ type: 'timestamp' })
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
-    @Column({ type: 'boolean', default: false })
-    isAccountVerified: boolean;
+    @Column({ nullable: true })
+    isAccountVerified: boolean = false;
 
     @Exclude()
-    @Column({ type: 'boolean', default: false })
+    @Column({ nullable: true })
     isAccountBlocked: boolean;
 
     @Exclude()
-    @Column({ type: 'int', default: 0 })
+    @Column({ nullable: true })
     failedLoginAttempts: number;
 
     @Exclude()
     @Column({ nullable: true })
-    magicLinkToken: string | null;
+    magicLinkToken: string;
 
     @Exclude()
     @Column({ type: 'timestamp', nullable: true })
-    magicLinkTokenExpiration: Date | null;
+    magicLinkTokenExpiration: Date;
 
     @Exclude()
-    @Column({ type: 'text', nullable: true })
+    @Column({ type: 'text', nullable: true})
     refreshToken: string | null;
 
     @Exclude()
-    @Column({ type: 'timestamp', nullable: true })
-    refreshTokenExpiration: Date | null;
+    @Column({ nullable: true })
+    refreshTokenExpiration: Date;
 
     @Exclude()
     @Column({ nullable: true })
-    forgotPassword: string | null;
+    forgotPassword: string;
 
     @Exclude()
     @Column({ nullable: true })
-    resetPassword: string | null;
+    resetPassword: string;
 
     @Exclude()
     @Column({ nullable: true })
-    avatarUrl: string | null;
+    avatarUrl: string;
 
     @Exclude()
     @Column({ type: 'text', nullable: true })
     otpCode: string | null;
 
     @Exclude()
-    @Column({ type: 'boolean', default: false })
+    @Column({ nullable: true })
     isResetCodeVerified: boolean;
 
     @Exclude()
@@ -92,12 +86,11 @@ export class User {
     otpExpiresAt: Date | null;
 
     @Exclude()
-    @Column({ type: 'boolean', default: false })
+    @Column({ nullable: true })
     isEmailVerified: boolean;
 
     @Exclude()
     @Column({ nullable: true })
-    githubProfileUrl: string | null;
+    githubProfileUrl: string;
 }
-
 
