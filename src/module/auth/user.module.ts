@@ -7,7 +7,6 @@ import { User } from './entity/user.entity';
 import { JwtTokenService } from '../../common/jwt/jwt.service';
 import { MailService } from '../../common/utils/mailEmailService';
 import { FirebaseConfigModule } from '../../common/config/firebaseConfig';
-import { AppConfigModule } from '../../common/config/ConfigModule';
 @Module({
     imports: [
         ConfigModule,

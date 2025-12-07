@@ -18,10 +18,9 @@ import { TypeOrmModule } from "@nestjs/typeorm";
                 database: configService.get<string>('DATABASE_NAME'),
                 synchronize: true,
                 autoLoadEntities: true,
-                // ssl: {
-                //     rejectUnauthorized: false,
-                // },
-                // Uncomment the above ssl block if you need SSL connection
+                ssl: {
+                    rejectUnauthorized: false,
+                },
             }),
         }),
     ],
