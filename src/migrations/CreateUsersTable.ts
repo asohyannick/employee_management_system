@@ -1,40 +1,44 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateUsersTable1733600000000 implements MigrationInterface {
-  name = 'CreateUsersTable1733600000000';
+export class FixUserBooleansAndNullable1733602000000 implements MigrationInterface {
+  name = 'FixUserBooleansAndNullable1733602000000';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      CREATE TABLE "users" (
-        "id" SERIAL PRIMARY KEY,
-        "githubId" VARCHAR,
-        "firebaseUid" VARCHAR,
-        "firstName" VARCHAR NOT NULL,
-        "lastName" VARCHAR NOT NULL,
-        "email" VARCHAR NOT NULL UNIQUE,
-        "password" VARCHAR NOT NULL,
-        "createdAt" TIMESTAMP NOT NULL DEFAULT now(),
-        "updatedAt" TIMESTAMP NOT NULL DEFAULT now(),
-        "isAccountVerified" BOOLEAN NOT NULL DEFAULT false,
-        "isAccountBlocked" BOOLEAN NOT NULL DEFAULT false,
-        "failedLoginAttempts" INTEGER,
-        "magicLinkToken" VARCHAR,
-        "magicLinkTokenExpiration" TIMESTAMP,
-        "refreshToken" TEXT,
-        "refreshTokenExpiration" TIMESTAMP,
-        "forgotPassword" VARCHAR,
-        "resetPassword" VARCHAR,
-        "avatarUrl" VARCHAR,
-        "otpCode" TEXT,
-        "isResetCodeVerified" BOOLEAN NOT NULL DEFAULT false,
-        "otpExpiresAt" TIMESTAMP,
-        "isEmailVerified" BOOLEAN NOT NULL DEFAULT false,
-        "githubProfileUrl" VARCHAR
-      );
+      UPDATE "users" SET
+        "isAccountVerified"     = COALESCE("isAccountVerified", false),
+        "isAccountBlocked"      = COALESCE("isAccountBlocked", false),
+        "isResetCodeVerified"   = COALESCE("isResetCodeVerified", false),
+        "isEmailVerified"       = COALESCE("isEmailVerified", false),
+        "failedLoginAttempts"   = COALESCE("failedLoginAttempts", 0)
+    `);
+
+    await queryRunner.query(`
+      ALTER TABLE "users"
+      ALTER COLUMN "isAccountVerified"   SET DEFAULT false,
+      ALTER COLUMN "isAccountVerified"   SET NOT NULL,
+      ALTER COLUMN "isAccountBlocked"    SET DEFAULT false,
+      ALTER COLUMN "isAccountBlocked"    SET NOT NULL,
+      ALTER COLUMN "isResetCodeVerified" SET DEFAULT false,
+      ALTER COLUMN "isResetCodeVerified" SET NOT NULL,
+      ALTER COLUMN "isEmailVerified"     SET DEFAULT false,
+      ALTER COLUMN "isEmailVerified"     SET NOT NULL,
+      ALTER COLUMN "failedLoginAttempts" SET DEFAULT 0,
+      ALTER COLUMN "failedLoginAttempts" SET NOT NULL,
+      ALTER COLUMN "otpCode"             DROP NOT NULL,
+      ALTER COLUMN "otpExpiresAt"        DROP NOT NULL,
+      ALTER COLUMN "githubProfileUrl"    DROP NOT NULL;
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE "users"`);
+    await queryRunner.query(`
+      ALTER TABLE "users"
+      ALTER COLUMN "isAccountVerified"   DROP DEFAULT,
+      ALTER COLUMN "isAccountBlocked"    DROP DEFAULT,
+      ALTER COLUMN "isResetCodeVerified" DROP DEFAULT,
+      ALTER COLUMN "isEmailVerified"     DROP DEFAULT,
+      ALTER COLUMN "failedLoginAttempts" DROP DEFAULT;
+    `);
   }
 }

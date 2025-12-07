@@ -18,13 +18,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
                 database: configService.get<string>('DB_NAME'),
                 synchronize: true,
                 autoLoadEntities: true,
+                migrationsRun: true,
                 ssl: {
                     rejectUnauthorized: false,
                 },
             }),
         }),
     ],
-    providers: [],
-    exports: [],
+    exports: [ConfigModule, TypeOrmModule],
 })
 export class AppConfigModule { }         
