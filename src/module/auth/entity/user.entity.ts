@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer'
 @Entity({ name: 'users' })
 export class User {
@@ -19,7 +19,7 @@ export class User {
     @Column()
     lastName: string;
 
-    @Column()
+    @Column({ unique: true })
     email: string;
 
     @Exclude()
@@ -27,22 +27,22 @@ export class User {
     password: string;
 
     @Exclude()
-    @Column({ nullable: true })
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     createdAt: Date;
 
     @Exclude()
-    @Column({ nullable: true })
+    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
-    @Column({ nullable: true })
-    isAccountVerified: boolean = false;
+    @Column({ nullable: false })
+    isAccountVerified: boolean;
 
     @Exclude()
-    @Column({ nullable: true })
+    @Column({ nullable: false })
     isAccountBlocked: boolean;
 
     @Exclude()
-    @Column({ nullable: true })
+    @Column({ nullable: false })
     failedLoginAttempts: number;
 
     @Exclude()
